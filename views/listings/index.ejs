@@ -11,7 +11,7 @@
             <%for (let r of result){%>
                 <a style="text-decoration: none;" href="/listings/<%=r.id%>">
                     <div class="card listing-card">
-                        <img style="height: 20rem;" class="card-img-top" src="<%=r.image%>" alt="Card image cap">
+                        <img style="height: 20rem;" class="card-img-top" src="<%=r.image.url%>" alt="Card image cap">
                         <div class="card-img-overlay"></div>
                         <div class="card-body">
                             <p class="card-text">

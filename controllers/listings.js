@@ -13,8 +13,11 @@ module.exports.new=(req, res) => {
 }
 
 module.exports.createNew=async (req, res, next) => {
+    let url = req.file.path
+    let file_name=req.file.filename
     let newListing = await new Listing(req.body)
     newListing.owner = req.user._id
+    newListing.image={url,file_name}
     newListing.save()
     req.flash("success","New Listing Created!")
     res.redirect("/listings")
