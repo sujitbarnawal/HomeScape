@@ -11,6 +11,7 @@
                 <img class=" card-img-top show-img" src="<%=r.image%>" alt="Card image cap">
                 <div class="card-body">
                     <p class="card-text">
+                        <b>Owned By: <%=r.owner.username%> </b><br><br>
                         <%=r.description%> <br>
                         Price: Rs.<%=r.price.toLocaleString("en-NP")%> <br>
                         Location: <%=r.location%> <br>
@@ -19,16 +20,20 @@
                 </div>
             </div>
 
+        <% if(currentUser && r.owner._id.equals(currentUser._id)){ %>
             <div class="btns offset-2">
-                <a href="/listings/<%=r._id%>/edit" class="btn btn-dark editBtn">Edit</a>
-                <form method="POST" action="/listings/<%=r._id%>?_method=DELETE">
+                <a href="/listings/<%= r._id %>/edit" class="btn btn-dark editBtn">Edit</a>
+                <form method="POST" action="/listings/<%= r._id %>?_method=DELETE">
                     <button class="btn btn-dark deleteBtn">Delete</button>
                 </form>
             </div>
+        <% } %>
+
+        <% if(currentUser){ %>
             <div class="col-6 offset-2">
                 <hr>
                 <h4>Leave Reviews</h4>
-                <form class="mb-3 needs-validation" method="POST" action="/listings/<%=r._id%>/reviews" novalidate >
+                <form class="mb-3 needs-validation" method="POST" action="/listings/<%=r._id%>/reviews" novalidate autocomplete="off">
                     <div >
                         <label for="rating" class="form-label">Rating</label><br>
                         <input  type="range" min="1" max="5" id="rating" name="review[rating]">
@@ -50,7 +55,7 @@
                 <%for(review of r.reviews){%>
                     <div class="card col-md-5 ms-3 mb-3">
                         <div class="card-body">
-                            <h5 class="card-title">Sujit Barnawal</h5>
+                            <h5 class="card-title">@<%=review.author.username%></h5>
                             <p class="card-text"><%=review.comment%></p>
                             <p class="card-text"><%=review.rating%> stars</p>
                         </div><br>
@@ -61,5 +66,6 @@
                 <%}%>
                </div>
             </div>
+        <%  } %>
         </div>
     </body>
