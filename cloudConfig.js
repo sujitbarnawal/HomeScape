@@ -11,7 +11,7 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
       folder: 'homescape_DEV',
-      allowedFormats: async (req, file) => ['png','jpeg','jpg']
+      allowedFormats: ['png','jpeg','jpg']
     },
   });
 

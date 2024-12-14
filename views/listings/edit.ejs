@@ -1,16 +1,12 @@
 <% layout('/layouts/boilerplate') %>
 <body>
-    
-    
-        
-    </form>
     <div class="row">
         <div class="col-8  offset-2">
             <h2>Edit the Listing</h2> <br>
-            <form enctype="multipart/form-data" method="POST" action="/listings/<%=r._id%>?_method=PUT" novalidate class="needs-validation" autocomplete="off">
+            <form enctype="multipart/form-data" method="POST" action="/listings/<%= r._id %>?_method=PUT" novalidate class="needs-validation" autocomplete="off">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
-                    <input class="form-control" required name="title" type="text" placeholder="Edit the title of listing" value="<%=r.title%>">
+                    <input class="form-control" required name="title" type="text" placeholder="Edit the title of listing" value="<%= r.title %>">
                     <div class="invalid-feedback">
                         Please provide a valid title.
                     </div>
@@ -20,7 +16,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" required name="description" rows="10" placeholder="Edit the description listing" ><%=r.description%></textarea>
+                    <textarea class="form-control" required name="description" rows="10" placeholder="Edit the description of listing"><%= r.description %></textarea>
                     <div class="invalid-feedback">
                         Please provide a valid description.
                     </div>
@@ -28,33 +24,50 @@
                         Description looks good!
                     </div>
                 </div>
+
+                <!-- Display original images -->
                 <div class="mb-3">
-                    Original Image <br>
-                    <img src="<%= originalImageUrl %>" width="250" height="250">
+                    <label for="originalImages" class="form-label">Current Images</label><br>
+                    <% if (r.images && r.images.length > 0) { %>
+                        <div style="display: flex; gap: 10px;">
+                            <% r.images.forEach((image, index) => { %>
+                                <div class="existing-image mb-2">
+                                    <img style="border-radius: 10px;" src="<%= image.url %>" width="150" height="150" class="mb-2" alt="Image <%= index + 1 %>">
+                                </div>
+                            <% }) %>
+                        </div>
+                    <% } else { %>
+                        <p>No images uploaded yet.</p>
+                    <% } %>
                 </div>
+                
+
+                <!-- Input for new images (multiple uploads) -->
                 <div class="mb-3">
-                    <label for="image" class="form-label">Upload New Image</label>
-                    <input class="form-control"  name="listing[image]" type="file">
+                    <label for="images" class="form-label">Upload New Images</label>
+                    <input class="form-control" name="listing[images]" type="file" multiple>
                 </div>
+
                 <div class="row">
                     <div class="mb-3 col-md-4">
                         <label for="price" class="form-label">Price</label>
-                        <input class="form-control" required name="price" type="number" placeholder="Edit the price of listing" value="<%=r.price%>"><br><br>
+                        <input class="form-control" required name="price" type="number" placeholder="Edit the price of listing" value="<%= r.price %>"><br><br>
                         <div class="invalid-feedback">
                             Please provide a valid price.
                         </div>
                     </div>
                     <div class="mb-3 col-md-4">
                         <label for="country" class="form-label">Country</label>
-                        <input class="form-control" required name="country" type="text" placeholder="Edit the country of listing" value="<%=r.country%>">
+                        <input class="form-control" required name="country" type="text" placeholder="Edit the country of listing" value="<%= r.country %>">
                         <div class="invalid-feedback">
                             Please provide a valid country.
                         </div>
                     </div> 
                 </div>   
+
                 <div class="mb-3">
                     <label for="location" class="form-label">Location</label>
-                    <input class="form-control" required name="location" type="text" placeholder="Edit the location of listing" value="<%=r.location%>">
+                    <input class="form-control" required name="location" type="text" placeholder="Edit the location of listing" value="<%= r.location %>">
                     <div class="invalid-feedback">
                         Please provide a valid location.
                     </div>
@@ -66,8 +79,3 @@
     </div>
 </body>
 </html>
-
-
-
-        
-      

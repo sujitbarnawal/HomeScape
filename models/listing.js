@@ -10,10 +10,12 @@ let listingSchema = Schema({
     description: {
         type: String,
     },
-    image: {
-        url: String,
-        file_name: String,
-    },
+    images: [
+        {
+            url: String,
+            file_name: String,
+        }
+    ],
     price: {
         type: Number,
     },
@@ -36,8 +38,8 @@ let listingSchema = Schema({
 })
 
 listingSchema.post("findOneAndDelete", async (listing) => {
-    if(listing){
-        await Review.deleteMany({ _id   : { $in: listing.reviews } })
+    if (listing) {
+        await Review.deleteMany({ _id: { $in: listing.reviews } })
     }
 })
 

@@ -92,7 +92,42 @@
             <%for (let r of result){%>
                 <a style="text-decoration: none;" href="/listings/<%=r.id%>">
                     <div class="card listing-card">
-                        <img style="height: 20rem;" class="card-img-top" src="<%=r.image.url%>" alt="Card image cap">
+                        <div id="carousel-<%= r.id %>" class="carousel slide" data-bs-ride="carousel">
+                            <!-- Indicators (dots for each slide) -->
+                            <div class="carousel-indicators">
+                                <% for (let i = 0; i < r.images.length; i++) { %>
+                                    <button type="button" 
+                                            data-bs-target="#imageCarousel" 
+                                            data-bs-slide-to="<%= i %>" 
+                                            class="<%= i === 0 ? 'active' : '' %>" 
+                                            aria-current="<%= i === 0 ? 'true' : 'false' %>" 
+                                            aria-label="Slide <%= i + 1 %>"></button>
+                                <% } %>
+                            </div>
+                        
+                            <!-- Carousel slides -->
+                            <div class="carousel-inner">
+                                <% r.images.forEach((img, index) => { %>
+                                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                        <img style="height: 20rem; border-radius: 10px;" 
+                                             class="d-block w-100" 
+                                             src="<%= img.url %>" 
+                                             alt="Image <%= index + 1 %>">
+                                    </div>
+                                <% }) %>
+                            </div>
+                        
+                            <!-- Controls (Previous and Next buttons) -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                        
                         <div class="card-img-overlay"></div>
                         <div class="card-body">
                             <p class="card-text">
